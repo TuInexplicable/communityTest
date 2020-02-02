@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		<script src="../js/jquery.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/jquery.datetimepicker.css" />
+		<script src="../js/jquery.datetimepicker.js"></script>
+	</head>
+
+	<body>
+		<h3>DateTimePicker</h3>
+		<input type="text" value="2014-03-15" id="datetimepicker" /><br><br>
+	</body>
+	<script type="text/javascript">
+		$('#datetimepicker').datetimepicker();
+		$('#datetimepicker').datetimepicker({
+			language: "zh-CN",
+			value: getCurrDate(),
+			timepicker: false,
+			format: 'Y-m-d',
+			formatDate: 'Y-m-d'
+		});
+
+		function getCurrDate() {
+			var mDate = new Date();
+			var temp = mDate.getFullYear() + "-" + checkDate(mDate.getMonth() + 1) + "-" + checkDate(mDate.getDate());
+			return temp;
+		}
+		
+		function checkDate(d){
+			if(parseInt(d)<10){
+				return "0" +d;
+			}else {
+				return d;
+			}
+		}
+	</script>
+
+</html>

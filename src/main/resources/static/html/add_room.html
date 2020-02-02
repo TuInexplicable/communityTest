@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-model="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/form-elements.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:52:40 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="../img/favicon_1.ico">
+
+    <title>Velonic - Responsive Admin Dashboard Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-reset.css" rel="stylesheet">
+
+    <!--Animation css-->
+    <link href="../css/animate.css" rel="stylesheet">
+
+    <!--Icon-fonts css-->
+    <link href="../assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="../assets/ionicon/css/ionicons.min.css" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/helper.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<!-- Aside Ends-->
+
+<!--Main Content Start -->
+<section>
+
+    <!-- Header Ends -->
+
+    <!-- Page Content Start -->
+    <!-- ================== -->
+
+    <div class="wraper container-fluid">
+
+        <div class="row">
+            <!-- Basic example -->
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">添加</h3></div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">教室编号</label>
+                                <div class="col-md-9">
+                                    <input type="text" v-model="room.roomno" class="form-control" placeholder="请输入教室编号">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">教室位置</label>
+                                <div class="col-md-9">
+                                    <input type="text" v-model="room.loc" class="form-control" placeholder="请输入教室位置">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="example-email">教室人数容量</label>
+                                <div class="col-md-9">
+                                    <input type="email" id="example-email" v-model="room.capcity" name="example-email"
+                                           class="form-control"
+                                           placeholder="请输入人数容量">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">状态</label>
+                                <div class="col-md-9" id="state">
+                                    <div class="radio-inline">
+                                        <label class="cr-styled" for="example-radio4">
+                                            <input type="radio" v-model="room.state" id="example-radio4"
+                                                   name="example-radios1"
+                                                   value="0" checked>
+                                            <i class="fa"></i>
+                                            空闲
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label class="cr-styled" for="example-radio5">
+                                            <input type="radio" v-model="room.state" id="example-radio5"
+                                                   name="example-radios1"
+                                                   value="1">
+                                            <i class="fa"></i>
+                                            使用
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <a class="btn btn-primary m-t-20" href="#" @click="addRoom()"> <i class="fa"></i>
+                                        保存教室</a>
+                                    <a class="btn btn-default m-t-20" href="#"> <i class="fa"></i> 取&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;消</a>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/pace.min.js"></script>
+<script src="../js/wow.min.js"></script>
+<script src="../js/jquery.nicescroll.js" type="text/javascript"></script>
+
+<script src="../js/jquery.app.js"></script>
+
+<script src="../js/layer/layer.js"></script>
+<script src="../js/vue.min.js"></script>
+<script src="../js/vue-resource.min.js"></script>
+<script src="../js/axios.min.js"></script>
+<script src="../js/common.js"></script>
+
+
+</body>
+
+<script>
+    var app = new Vue({
+        el: 'div.row',
+        data: {
+            room: {}
+        },
+        methods: {
+            addRoom: function () {
+                //console.log($('#roomno').val(), $('#loc').val(), $('#capcity').val(), $('div#state input[type=radio]:checked').val())
+                //console.log(room)
+                axios.post(baseUrl + '/room/addRoom.action', this.room).then(function (res) {
+                    if (res.data.code == 200) {
+                        layer.msg(res.data.msg);
+                        setTimeout(function () {
+                            location.href = "room.html";
+                        }, 500)
+                    }
+                }).then(function (error) {
+                });
+            }
+        }
+    });
+</script>
+
+</html>

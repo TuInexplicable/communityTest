@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/form-elements.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:52:40 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="../img/favicon_1.ico">
+
+    <title>Velonic - Responsive Admin Dashboard Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-reset.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/jquery.datetimepicker.css"/>
+    <!--Animation css-->
+    <link href="../css/animate.css" rel="stylesheet">
+
+    <!--Icon-fonts css-->
+    <link href="../assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="../assets/ionicon/css/ionicons.min.css" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/helper.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<!-- Aside Ends-->
+
+<!--Main Content Start -->
+<section>
+
+    <!-- Header Ends -->
+
+    <!-- Page Content Start -->
+    <!-- ================== -->
+
+    <div class="wraper container-fluid">
+        <!--<div class="page-title">
+            <h3 class="title">添加学生</h3>
+        </div>-->
+
+        <div class="row">
+            <!-- Basic example -->
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">添加班级</h3></div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">班级编号</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" v-model="classes.cname"
+                                           placeholder="请输入班级编号">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">教室编号</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="roomSelect" v-model="classes.rid">
+                                        <option v-for="item in roomList" v-bind:value="item.rid">
+                                            {{item.roomno}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">班级类型</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" v-model="classes.ctype">
+                                        <option v-for="item in classType" v-bind:value="item.mid">{{item.mname}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">班级人数</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" v-model="classes.num" placeholder="请输入班级人数">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">班级周期</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="startTime"
+                                           v-model="classes.starttime"
+                                           placeholder="请输入开始时间">
+                                </div>
+                                --
+                                <!--<label class="col-md-1 control-label">&#45;&#45;</label>-->
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" v-model="classes.endtime"
+                                           placeholder="请输入开始时间">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">班主任</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" v-model="classes.headmasterid">
+                                        <option v-for="item in tList" v-bind:value="item.uid">{{item.uname}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">技术老师</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" v-model="classes.technicalid">
+                                        <option v-for="item in aList" v-bind:value="item.uid">{{item.uname}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">日语老师</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" v-model="classes.japanid">
+                                        <option v-for="item in bList" v-bind:value="item.uid">{{item.uname}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <a class="btn btn-primary m-t-20" href="#" @click="addClass()"> <i class="fa"></i>
+                                        保存班级</a>
+                                    <a class="btn btn-default m-t-20" href="#"> <i class="fa"></i> 取&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;消</a>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- panel-body -->
+                </div>
+                <!-- panel -->
+                <!-- panel -->
+            </div>
+            <!-- col-->
+
+        </div>
+        <!-- End row -->
+
+    </div>
+    <!-- Page Content Ends -->
+    <!-- ================== -->
+
+</section>
+<!-- Main Content Ends -->
+
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/pace.min.js"></script>
+<script src="../js/wow.min.js"></script>
+<script src="../js/jquery.nicescroll.js" type="text/javascript"></script>
+
+<script src="../js/jquery.app.js"></script>
+
+
+<script src="../js/layer/layer.js"></script>
+<script src="../js/vue.min.js"></script>
+<script src="../js/vue-resource.min.js"></script>
+<script src="../js/axios.min.js"></script>
+<script src="../js/common.js"></script>
+
+<script src="../js/jquery.datetimepicker.js"></script>
+
+</body>
+
+<script>
+    $(function () {
+        $('#startTime').datetimepicker();
+
+        $('#startTime').datetimepicker({
+            language: "zh-CN",
+            value: getCurrDate(),
+            timepicker: false,
+            format: 'Y-m-d',
+            formatDate: 'Y-m-d'
+        });
+
+        $('#endTime').datetimepicker();
+        $('#endTime').datetimepicker({
+            language: "zh-CN",
+            value: getCurrDate(),
+            timepicker: false,
+            format: 'Y-m-d',
+            formatDate: 'Y-m-d'
+        });
+
+
+        var app = new Vue({
+            el: 'div.row',
+            data: {
+                roomList: [],
+                classType: [],
+                tList: [],
+                aList: [],
+                bList: [],
+                classes: {
+                    starttime: getCurrDate(),
+                    endtime: getEndDate()
+                }
+            },
+            methods: {
+                getFreeRoom: function () {
+                    axios.get(baseUrl + '/class/getFreeRoom.action').then(function (res) {
+                        app.roomList = res.data.result;
+                    }).then(function (error) {
+                    })
+                },
+                getType: function () {
+                    axios.get(baseUrl + '/common/get_type.action/班级类型').then(function (res) {
+                        app.classType = res.data.result;
+                    }).then(function (error) {
+                    })
+                },
+                getTeacher: function () {
+                    axios.get(baseUrl + '/user/queryByType.action/5').then(function (res) {
+                        app.tList = res.data.result;
+                    }).then(function (error) {
+                    })
+                },
+                getTeachera: function () {
+                    axios.get(baseUrl + '/user/queryByType.action/9').then(function (res) {
+                        app.aList = res.data.result;
+                    }).then(function (error) {
+                    })
+                },
+                getTeacherb: function () {
+                    axios.get(baseUrl + '/user/queryByType.action/17').then(function (res) {
+                        app.bList = res.data.result;
+                    }).then(function (error) {
+                    })
+                },
+                addClass: function () {
+                    console.log(this.classes);
+                    axios.post(baseUrl + '/class/addClass.action', app.classes).then(function (res) {
+                        if (res.data.code == 200) {
+                            layer.msg(res.data.msg);
+                            setTimeout(function () {
+                                location.href = "class_list.html";
+                            }, 500);
+                        } else {
+                            layer.msg(res.data.msg);
+                        }
+                    }).then(function (error) {
+                    })
+                }
+            },
+            mounted: function () {
+                this.getFreeRoom();
+                this.getType();
+                this.getTeacher();
+                this.getTeachera();
+                this.getTeacherb();
+            }
+        });
+    })
+    var mDate = new Date();
+
+    function getCurrDate() {
+        var mDate = new Date();
+        var temp = mDate.getFullYear() + "-" + checkDate(mDate.getMonth() + 1) + "-" + checkDate(mDate.getDate());
+        return temp;
+    }
+
+    function getEndDate() {
+        var millSeconds = Math.abs(mDate) + (135 * 24 * 60 * 60 * 1000);
+        var rDate = new Date(millSeconds);
+        var temp1 = rDate.getFullYear() + "-" + checkDate(rDate.getMonth() + 1) + "-" + checkDate(rDate.getDate());
+        return temp1;
+    }
+
+    function checkDate(d) {
+        if (parseInt(d) < 10) {
+            return "0" + d;
+        } else {
+            return d;
+        }
+    }
+</script>
+</html>

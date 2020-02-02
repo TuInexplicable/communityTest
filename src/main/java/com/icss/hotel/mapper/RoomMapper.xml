@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icss.hotel.dao.RoomMapper" >
+  <!--查询所有客房-->
+  <select id="queryAllRoom" resultType="java.util.Map">
+    SELECT * FROM tb_room r,tb_type t WHERE r.tno=t.tno
+  </select>
+
+  <insert id="addRoom" parameterType="com.icss.hotel.domain.Room">
+    INSERT INTO tb_type(tname,price) VALUES(#{tname},#{price}
+  </insert>
+
+  <!--入住，查询所有空闲的房子-->
+  <select id="selectAllRoom_0" resultType="java.util.Map">
+    SELECT rno, t.tno , remark, tname , price FROM tb_type t ,tb_room r WHERE rstate=0 AND t.tno=r.tno
+  </select>
+  <!--订房刷新房间状态-->
+  <update id="updataRoomState">
+    update tb_room set rstate = #{rstate} where rno = #{rno}
+  </update>
+  <delete id="deleteRoomByTno" parameterType="java.lang.Integer">
+    delete from tb_room where tno = #{tno}
+  </delete>
+</mapper>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jquery.gritter.css"/>
+    <link rel="stylesheet" type="text/css" href="css/checkpass.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery.gritter.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/checkpass.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/Particleground.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/common.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <title>Login</title>
+</head>
+<body class="body">
+<div id="particles">
+    <div id="intro">
+    </div>
+</div>
+<div class="container-fluid">
+    <div id="login">
+        <div id="login_header">
+            <h3 style="font-size: 32px;margin-left: 8px;color: yellow;margin-top: 100px"><b>C S I 安居舒康 H O T E L</b></h3>
+        </div>
+        <div id="login_body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span class="fa fa-user"></span></label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="account" placeholder="请输入用户名" value="admin">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 control-label"><span class="fa fa-lock"></span></label>
+                    <div class="col-sm-7">
+                        <input type="password" class="form-control" id="password" placeholder="请输入密码" value="123456">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputCode" class="col-sm-2 control-label"><span class="fa fa-key"></span></label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="inputCode" placeholder="点击获取验证码" onclick="createCode()">
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="code" id="checkCode"  ></div>
+                    </div>
+                </div>
+                <div hidden>
+                    <input type="checkbox"style="margin-left: 45px" id="repassword">记住密码
+                    <input type="checkbox"style="margin-left: 10px" id="zdlogin">自动登陆
+                    <!--&nbsp;&nbsp;&nbsp;自动登陆就要选记住密码-->
+                    <a id="fipassword" style="margin-left: 10px;font-size: 13.5px;color: white">
+                        找回密码
+                    </a>
+                </div>
+            </form>
+        </div>
+        <div id="login_bottom">
+            <div class="row">
+                <div class="col-md-offset-2">
+                    <!--<input style="margin-left: -18px;margin-top: 10px" type="button" id="btnregister" class="btn btn-success btn-lg"value="用户注册" />-->
+                    <input style="margin-left: 200px;" type="button" id="btnuser" class="btn btn-success btn-lg"value="用户登录" />
+                    <!--<input style="margin-left: 5px;margin-top: 10px" type="button" id="btnadmin" class="btn btn-success btn-lg"value="管理登录" />-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $("#btnuser").on("click",function(){
+    var loginAccount = $("#account").val();
+    var password = $("#password").val();
+    var inputCode = $("#inputCode").val();
+    if(loginAccount == "" || loginAccount == null){
+        $.gritter.add({
+            time: 2000,
+            position: "top-center",
+            title: '提示信息',
+            text: ['请输入用户名'],
+            imageClass: "fa fa-close",
+            sticky: false,
+            removeAll: true
+        });
+        return;
+    }
+    if(password == "" || password == null){
+        $.gritter.add({
+            time: 2000,
+            position: "top-center",
+            title: '提示信息',
+            text: ['请输入密码'],
+            imageClass: "fa fa-close",
+            sticky: false,
+            removeAll: true
+        });
+        return;
+    }
+    if(inputCode == "" || inputCode == null){
+        $.gritter.add({
+            time: 2000,
+            position: "top-center",
+            title: '提示信息',
+            text: ['请输入验证码'],
+            imageClass: "fa fa-close",
+            sticky: false,
+            removeAll: true
+        });
+        return;
+    } else if(inputCode.toUpperCase() != code.toUpperCase()){
+        $.gritter.add({
+            time: 2000,
+            position: "top-center",
+            title: '提示信息',
+            text: ['验证码不正确'],
+            imageClass: "fa fa-close",
+            sticky: false,
+            removeAll: true
+        });
+        return;
+    }
+    else{
+        $.ajax({
+            type:"post",
+            url:baseUrl + '/logon.action',
+            data:{account:loginAccount,password:password},
+            dataType:"json",
+            success:function(data){
+                //msg:是LoginServlet返回的文本值，
+                    //sessionStorage 在重启浏览器，关闭页面或打开新页面时失效
+                    // sessionStorage.setItem("name",name);
+                    // sessionStorage.setItem("userId",msg.userId);
+                if (data.code == 200) {
+                    localStorage.setItem("empno",data.emp.empno);
+                    localStorage.setItem("roleid",data.emp.roleid)
+                    layer.msg(data.msg);
+                    setTimeout(function () {
+                        location.href =baseUrl+"/page/index.html";
+                    }, 500)
+                }else{
+                    $.gritter.add({
+                        time: 2000,
+                        position: "top-center",
+                        title: '提示信息',
+                        text: ['用户名密码有问题'],
+                        imageClass: "fa fa-close",
+                        sticky: false,
+                        removeAll: true
+                    });
+                }
+            }
+        });
+    }
+});
+   $(document).keyup(function (event) {
+       if(event.keyCode==13){
+           $("#btnuser")[0].click();
+       }
+   })
+</script>
+</html>

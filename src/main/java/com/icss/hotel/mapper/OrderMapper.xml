@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icss.hotel.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.icss.hotel.domain.Order" >
+    <id column="ono" property="ono" jdbcType="INTEGER" />
+    <result column="cno" property="cno" jdbcType="INTEGER" />
+    <result column="rno" property="rno" jdbcType="INTEGER" />
+    <result column="startTime" property="starttime" jdbcType="VARCHAR" />
+    <result column="endTime" property="endtime" jdbcType="VARCHAR" />
+    <result column="ostate" property="ostate" jdbcType="INTEGER" />
+    <result column="empno" property="empno" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ono, cno, rno, startTime, endTime, ostate, empno
+  </sql>
+  <!--查询简略的订单信息,ostate=0-->
+  <select id="selectAllOrder" resultType="com.icss.hotel.domain.Order_Cus" >
+    SELECT ono,startTime,cname FROM tb_order o,tb_customer c WHERE o.cno = c.cno and o.ostate=0;
+   </select>
+  <!--按订单编号查看订单详细信息-->
+  <select id="selectOrderDetail" resultType="com.icss.hotel.domain.Order_Cus" >
+    SELECT ono,c.cno cus_no,rno,startTime,integral,endTime,cname FROM tb_order o,tb_customer c WHERE o.cno = c.cno and ono=#{ono};
+   </select>
+  <!--查询所有ostate=1的订单-->
+  <select id="selectAllOrder_1" resultType="java.util.Map">
+    SELECT c.cno,cname,r.rno,tname,price,starttime,integral,ono
+    FROM tb_type t,tb_order o,tb_room r,tb_customer c
+    WHERE t.tno = r.tno AND o.rno = r.rno AND o.cno = c.cno and ostate = 1
+  </select>
+  <!--通过cname 查询ostate=1的订单-->
+  <select id="selectOrderByName_1" parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT c.cno,cname,r.rno,tname,price,starttime,integral,ono
+    FROM tb_type t,tb_order o,tb_room r,tb_customer c
+    WHERE t.tno = r.tno AND o.rno = r.rno AND o.cno = c.cno and ostate = 1 and cname = #{cname}
+  </select>
+<!--添加新的订单-->
+  <!--方法说明
+   由于插入需要多个参数且类型不同，paramType无法指定
+   此时可以通过springMvc传递的是list集合
+   通过#{指定参数下标}的方式获取
+    INSERT INTO tb_order(cno,rno,startTime,ostate,empno) VALUE(#{1},#{0},#{2},1,#{3})
+  -->
+  <insert id="addOrder" parameterType="com.icss.hotel.domain.Order">
+    INSERT INTO tb_order(cno,rno,startTime,ostate,empno) VALUE(#{cno},#{rno},#{starttime},1,#{empno})
+  </insert>
+  <!--退房,ostate=0,还要操作customer表,更新积分-->
+  <update id="optionOrder">
+     UPDATE tb_order SET ostate = 0,endTime=#{endTime} WHERE ono = #{ono}
+  </update>
+
+  <!--删除订单信息-->
+  <delete id="deleteOrder" parameterType="java.lang.Integer">
+    DELETE FROM tb_order WHERE ono = #{ono}
+  </delete>
+
+</mapper>

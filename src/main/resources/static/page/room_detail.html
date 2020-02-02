@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-for="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/table-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:53:05 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <!---->
+
+    <!-- Plugins css -->
+    <link href="../assets/modal-effect/css/component.css" rel="stylesheet">
+
+
+    <!---->
+
+
+    <link rel="shortcut icon" href="../img/favicon_1.ico">
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-reset.css" rel="stylesheet">
+
+    <!--Animation css-->
+    <link href="../css/animate.css" rel="stylesheet">
+
+    <!--Icon-fonts css-->
+    <link href="../assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="../assets/ionicon/css/ionicons.min.css" rel="stylesheet"/>
+
+    <!-- DataTables -->
+    <link href="../assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Custom styles for this template -->
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/helper.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        div.row table thead tr th {
+            text-align: center;
+        }
+
+        div.row table tbody tr td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<!--Main Content Start -->
+<section>
+
+    <!-- Page Content Start -->
+    <!-- ================== -->
+
+    <div class="wraper container-fluid">
+        <!--<div class="page-title">
+            <h3 class="title">教师列表</h3>
+        </div>-->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">客房详细信息列表</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="md-overlay"></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="datatable" class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>客房编号</th>
+                                        <th>类型编号</th>
+                                        <th>客房类型名称</th>
+                                        <th>价钱</th>
+                                        <th>状态</th>
+                                        <th>备注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+
+                                <!--<div class="modal fade" id="editModel" tabindex="-1" role="dialog"
+                                     aria-labelledby="myEditLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <form class="form-horizontal" role="form">
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">状态</label>
+                                                        <div class="col-md-9" id="state">
+                                                            <div class="radio-inline">
+                                                                <label class="cr-styled" for="example-radio4">
+                                                                    <input type="radio"
+                                                                           id="example-radio4"
+                                                                           name="example-radios1" v-model="room.state"
+                                                                           value="0" checked>
+                                                                    <i class="fa"></i>
+                                                                    空闲
+                                                                </label>
+                                                            </div>
+                                                            <div class="radio-inline">
+                                                                <label class="cr-styled" for="example-radio5">
+                                                                    <input type="radio"
+                                                                           id="example-radio5"
+                                                                           name="example-radios1" v-model="room.state"
+                                                                           value="1">
+                                                                    <i class="fa"></i>
+                                                                    使用
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                                                </button>
+                                                <button type="button" @click="updateRoom()" class="btn btn-primary">
+                                                    确定
+                                                </button>
+                                            </div>
+                                        </div>&lt;!&ndash; /.modal-content &ndash;&gt;
+                                    </div>&lt;!&ndash; /.modal &ndash;&gt;
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/pace.min.js"></script>
+<script src="../js/wow.min.js"></script>
+<script src="../js/jquery.nicescroll.js" type="text/javascript"></script>
+
+<!-- Modal-Effect -->
+<script src="../assets/modal-effect/js/classie.js"></script>
+<script src="../assets/modal-effect/js/modalEffects.js"></script>
+<script src="../js/jquery.app.js"></script>
+
+
+<script src="../js/layer/layer.js"></script>
+<script src="../js/vue.min.js"></script>
+<script src="../js/vue-resource.min.js"></script>
+<script src="../js/axios.min.js"></script>
+<script src="../js/common.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        queryAllRoom();
+
+    })
+
+
+    function queryAllRoom() {
+        $.get(baseUrl + '/room/queryAllRoom.action', function (data) {
+            if (data.code == 200) {
+                $.each(data.roomList, function (index, obj) {
+                    var tr = $('<tr></tr>');
+                    var td1 = $('<td></td>').text(obj.rno);
+                    var td2 = $('<td></td>').text(obj.tno);
+                    var td3 = $('<td></td>').text(obj.tname);
+                    var td4 = $('<td></td>').text(obj.price);
+                    var td5 = $('<td></td>').text(obj.rstate);
+                    var td6 = $('<td></td>').text(obj.remark);
+                    var td7 = $('<td></td>');
+                    var editA = $('<a>编辑</a>')
+                    var delA = $('<a>删除</a>')
+                    td7.append(editA).append(delA);
+
+                    tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7);
+                    $('tbody').append(tr);
+                })
+            }
+        }, "JSON");
+    }
+</script>
+
+</body>
+</html>
+
+    <!--<td v-if="item.state==0"><span style="color: green;">空闲</span>&nbsp;<span style="color: red;">使用中</span></td>
+    <td></td>
+    <td><a v-if="item.state==0" data-toggle="modal"
+           @click='forbid(item.rid)'>
+        使用</a>
+        <a v-if="item.state==1"
+           @click='onuses(item.rid)'>
+            空闲</a>
+
+    </td>-->

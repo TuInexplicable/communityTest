@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/table-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:53:05 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="../img/favicon_1.ico">
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-reset.css" rel="stylesheet">
+
+    <!--Animation css-->
+    <link href="../css/animate.css" rel="stylesheet">
+
+    <!--Icon-fonts css-->
+    <link href="../assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="../assets/ionicon/css/ionicons.min.css" rel="stylesheet"/>
+
+    <!-- DataTables -->
+    <link href="../assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Custom styles for this template -->
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/helper.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<!--Main Content Start -->
+<section>
+
+    <!-- Page Content Start -->
+    <!-- ================== -->
+
+    <div class="wraper container-fluid">
+        <!--<div class="page-title">
+            <h3 class="title">教师列表</h3>
+        </div>-->
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">订单详情</h3>
+                    </div>
+                    <div class="dataTables_length">
+                        <a class="btn btn-primary m-t-20" href="order.html"> <i class="fa"></i> 《返回</a>
+                    </div>
+                    <!--<div class="dataTables_length" id="datatable_length">
+                        <a class="btn btn-primary m-t-20" href="add_class.html">
+                            添加班级</a>
+                        <span id="showName"></span>
+                    </div>-->
+                    <div class="form-horizontal dataTables_length" id="datatable_length">
+
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="datatable" class="table table-striped">
+                                    <thead>
+                                    <tr>
+
+                                        <th>订单编号</th>
+                                        <th>顾客编号</th>
+                                        <th>顾客姓名</th>
+                                        <th>房间编号</th>
+                                        <th>入住时间</th>
+                                        <th>退房时间</th>
+                                        <th>当前积分</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Row -->
+
+    </div>
+
+</section>
+<!-- Main Content Ends -->
+
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/pace.min.js"></script>
+<script src="../js/wow.min.js"></script>
+<script src="../js/jquery.nicescroll.js" type="text/javascript"></script>
+
+<script src="../js/jquery.app.js"></script>
+
+<script src="../assets/datatables/jquery.dataTables.min.js"></script>
+<script src="../assets/datatables/dataTables.bootstrap.js"></script>
+
+<script src="../js/layer/layer.js"></script>
+<script src="../js/vue.min.js"></script>
+<script src="../js/vue-resource.min.js"></script>
+<script src="../js/axios.min.js"></script>
+<script src="../js/common.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var url = location.href;
+        var id = url.split("=")[1];
+        queryAllOrder(id);
+
+    })
+
+
+    function queryAllOrder(id) {
+        $.get(baseUrl + '/order/selectOrderDetail.action',{ono:id} ,function (data) {
+            if (data.code == 200) {
+                var tr = $('<tr></tr>');
+                var td1 = $('<td></td>').text(data.list.ono);//ono
+                var td2 = $('<td></td>').text(data.list.cus_no);//cus_no
+                var td3 = $('<td></td>').text(data.list.cname);//cname
+                var td4 = $('<td></td>').text(data.list.rno);//rno
+                var td5 = $('<td></td>').text(data.list.starttime);//starttime
+                var td6 = $('<td></td>').text(data.list.endtime)//endtime
+                var td7 = $('<td></td>').text(data.list.integral)//integral
+                var td8 = $('<td></td>').append("<a href='manage_order.html?id="+data.list.tno+"'  onclick='delOrder("+data.list.ono+")'><span style='color: red;' v-if='item.state==0'>删除</span></a>");
+
+                tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8);
+                $('tbody').append(tr);
+            }
+        }, "JSON");
+    }
+
+    function delOrder(orderNum) {
+        $.ajax({
+            method : 'post',
+            url : baseUrl + '/order/deleteOrder.action',
+            dateType:'json',
+            data :{ono:orderNum},
+            success : function(data) {
+                layer.msg(data.msg);
+                setTimeout(function () {
+                    window.onload;
+                }, 500)
+            }
+        })
+    }
+</script>
+
+</body>
+
+<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/table-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:53:07 GMT -->
+
+</html>

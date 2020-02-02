@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icss.hotel.dao.CustomerMapper" >
+
+  <select id="selectAllCustomer" resultType="com.icss.hotel.domain.Customer">
+    select * from tb_customer
+  </select>
+  <!--填写订单，查询顾客是否曾经办理过入住，通过idcard查询-->
+  <select id="selectCusByIdCard" parameterType="java.lang.String" resultType="com.icss.hotel.domain.Customer">
+    select * from tb_customer where idcard = #{idcard}
+  </select>
+  <!--添加新顾客-->
+  <insert id="addCustomer" parameterType="com.icss.hotel.domain.Customer">
+    INSERT INTO tb_customer(cname,gender,idcard,phone) VALUE(#{cname},#{gender},#{idcard},#{phone})
+  </insert>
+  <!--退房，更新积分-->
+  <update id="updateIntegralByCno">
+    update tb_customer set integral = #{integral} where cno = #{cno}
+  </update>
+</mapper>

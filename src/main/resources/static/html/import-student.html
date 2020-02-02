@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/table-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:53:05 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="img/favicon_1.ico">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+
+    <!--Animation css-->
+    <link href="css/animate.css" rel="stylesheet">
+
+    <!--Icon-fonts css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="assets/ionicon/css/ionicons.min.css" rel="stylesheet"/>
+
+    <!-- DataTables -->
+    <link href="assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/helper.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        div.row table thead tr th {
+            text-align: center;
+        }
+
+        div.row table tbody tr td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<!--Main Content Start -->
+<section>
+
+    <!-- Page Content Start -->
+    <!-- ================== -->
+
+    <div class="wraper container-fluid">
+        <!--<div class="page-title">
+            <h3 class="title">教师列表</h3>
+        </div>-->
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">学生列表</h3>
+                    </div>
+
+                    <div class="dataTables_length" id="datatable_length1">
+                        <form class="form-horizontal col-md-12" role="form">
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label" style="text-align: left;">请选择班级</label>
+                                <div class="col-md-11">
+                                    <select id="classSelect" class="form-control" style="width: 200px">
+                                        <option v-for="item in classList" v-bind:value="item.cid">
+                                            {{item.cname}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="dataTables_length" id="datatable_length">
+                        <a class="btn btn-primary m-t-20" id="upload" @click="openFile()"> <input type="file"
+                                                                                                  id="uploadFile"
+                                                                                                  @change="uploadFile()"
+                                                                                                  style="visibility:hidden;position:absolute;top:0px;width:0px"/>
+                            打开学生信息表</a>
+                        <a class="btn btn-primary m-t-20" @click="upload()">上传</a>
+                        <span id="showName"></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="datatable" class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>姓名</th>
+                                        <th>性别</th>
+                                        <th>联系电话</th>
+                                        <th>邮箱</th>
+                                        <th>出生年月</th>
+                                        <th>身份证号</th>
+                                        <th>籍贯</th>
+                                        <th>毕业院校</th>
+                                        <th>专业</th>
+                                        <th>毕业时间</th>
+                                        <!--<th>学历</th>-->
+                                        <th>就业意向</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(item,index) in stuList">
+                                        <td>{{index+1}}</td>
+                                        <td>{{item.sname}}</td>
+                                        <td v-if="item.gender ==1">男
+                                        </td>
+                                        <td v-if="item.gender ==0">女
+                                        </td>
+                                        <td>{{item.phone}}</td>
+                                        <td>{{item.email}}</td>
+                                        <td>{{item.birth}}</td>
+                                        <td>{{item.idcard}}</td>
+                                        <td>{{item.snative}}</td>
+                                        <td>{{item.school}}</td>
+                                        <td>{{item.major}}</td>
+                                        <td>{{item.graddate}}</td>
+                                        <!--<td>{{item.educ}}</td>-->
+                                        <td>{{item.jobyixixang}}</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End Row -->
+
+    </div>
+
+</section>
+<!-- Main Content Ends -->
+
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/pace.min.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+
+<script src="js/jquery.app.js"></script>
+
+<script src="assets/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/datatables/dataTables.bootstrap.js"></script>
+
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/pace.min.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+
+<script src="js/jquery.app.js"></script>
+
+<script src="js/layer/layer.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/vue-resource.min.js"></script>
+<script src="js/axios.min.js"></script>
+<script src="js/common.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var app = new Vue({
+            el: 'div.row',
+            data: {
+                classList: [],
+                stuList: []
+            },
+            methods: {
+                getRunningClass: function () {
+                    axios.get(baseUrl + '/class/getRunningClass.action/1').then(function (res) {
+                        console.log(res.data);
+                        app.classList = res.data.result;
+                    }).then(function (error) {
+                    });
+                },
+                openFile: function () {
+                    $('#uploadFile').get(0).click();
+                },
+                uploadFile: function () {
+                    var param = new FormData();
+                    //通过append向form对象添加数据
+                    param.append("cid", $('#classSelect').val());
+                    param.append("upfile", $('#uploadFile')[0].files[0]);
+
+                    //通过axios上传文件
+                    //配置
+                    var config = {
+                        //添加请求头
+                        headers: {
+                            "Content-Type": "multipart/form-data"
+                        }
+                    };
+                    axios.post(baseUrl + '/importExcel.action', param, config).then(function (
+                        response) {
+                        console.log(response);
+                        app.stuList = response.data.result;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                upload: function () {
+                    axios.get(baseUrl + '/add_moreStudent.action').then(function (
+                        response) {
+                        var ii = layer.msg('批量添加中', {
+                            icon: 16
+                            , shade: 0.01
+                        });
+                        console.log(response.data);
+                        //app.stuList = response.data.result;
+                        if (response.data.code == 200) {
+                            layer.close(ii);
+                            layer.msg(response.data.msg);
+                            $('tbody').empty();
+                        } else {
+                            layer.msg(result.data.msg);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            },
+            mounted: function () {
+                this.getRunningClass();
+            }
+        })
+    });
+
+
+</script>
+
+</body>
+
+</html>

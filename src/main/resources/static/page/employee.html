@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-for="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/table-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:53:05 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="../img/favicon_1.ico">
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-reset.css" rel="stylesheet">
+
+    <!--Animation css-->
+    <link href="../css/animate.css" rel="stylesheet">
+
+    <!--Icon-fonts css-->
+    <link href="../assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="../assets/ionicon/css/ionicons.min.css" rel="stylesheet"/>
+
+    <!-- DataTables -->
+    <link href="../assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Custom styles for this template -->
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/helper.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        div.row table thead tr th {
+            text-align: center;
+        }
+
+        div.row table tbody tr td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<section>
+    <div class="wraper container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">员工列表</h3>
+                    </div>
+                    <div class="dataTables_length" id="datatable_length">
+                        <a class="btn btn-primary m-t-20" href="add_employee.html" id="btnAddEmployee"> <i class="fa"></i> 添加员工</a>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="datatable" class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            员工编号
+                                        </th>
+                                        <th>姓名</th>
+                                        <th>性别</th>
+                                        <th>出生日期</th>
+                                        <th>电话</th>
+                                        <th>账号</th>
+                                        <th>状态</th>
+                                        <th>身份</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End Row -->
+
+    </div>
+
+</section>
+<!-- Main Content Ends -->
+
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/pace.min.js"></script>
+<script src="../js/wow.min.js"></script>
+<script src="../js/jquery.nicescroll.js" type="text/javascript"></script>
+
+<script src="../js/jquery.app.js"></script>
+
+<script src="../assets/datatables/jquery.dataTables.min.js"></script>
+<script src="../assets/datatables/dataTables.bootstrap.js"></script>
+
+<script src="../js/layer/layer.js"></script>
+<script src="../js/vue.min.js"></script>
+<script src="../js/vue-resource.min.js"></script>
+<script src="../js/axios.min.js"></script>
+<script src="../js/common.js"></script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/pace.min.js"></script>
+<script src="../js/wow.min.js"></script>
+<script src="../js/jquery.nicescroll.js" type="text/javascript"></script>
+
+<script src="../js/jquery.app.js"></script>
+
+<script src="../assets/datatables/jquery.dataTables.min.js"></script>
+<script src="../assets/datatables/dataTables.bootstrap.js"></script>
+
+<script src="../js/layer/layer.js"></script>
+<script src="../js/vue.min.js"></script>
+<script src="../js/vue-resource.min.js"></script>
+<script src="../js/axios.min.js"></script>
+<script src="../js/common.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        selectAllEmp();
+
+    })
+    function selectAllEmp() {
+        $.get(baseUrl + '/selectAllEmp.action', function (data) {
+            if (data.code == 200) {
+                $.each(data.list, function (index, obj) {
+                    var tr = $('<tr></tr>');
+                    var td1 = $('<td></td>').text(obj.empno);
+                    var td2 = $('<td></td>').text(obj.ename);
+                    var td3 = $('<td></td>').text(obj.gender);
+                    var td4 = $('<td></td>').text(obj.birth);
+                    var td5 = $('<td></td>').text(obj.phone);
+                    var td6 = $('<td></td>').text(obj.account);
+                    var td8 = $('<td></td>');
+                    var td9 = $('<td></td>');
+                    var state="在职";
+                    var roleid="普通员工";
+                    if(obj.state=="0"){
+                        state = "离职"
+                    }if(obj.roleid=="2"){
+                        roleid = "实习生";
+                    }
+                    var spanA = $('<span style="color: green;" v-if="item.state==0"></span>').text(state);
+                    var spanB = $('<span style="color: green;" v-if="item.state==0"></span>').text(roleid);
+                    td8.append(spanA);
+                    td9.append(spanB);
+
+                    tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td8).append(td9);
+                    $('tbody').append(tr);
+                })
+            }
+            else if(data.code==202){
+                layer.msg(data.msg)
+            }else {
+
+            }
+        }, "JSON");
+    }
+</script>
+<!--<script type="text/javascript">
+    $(document).ready(function () {
+
+        var app = new Vue({
+            el: 'div.row',
+            data: {
+                result: [],
+                tname: null,
+                currPages: 1,
+                nums: 10,
+                pages: {}
+            },
+            methods: {
+                queryAllStudent: function () {
+                    var param = {sname: this.tname, currPage: this.currPages, num: this.nums};
+                    axios.post(baseUrl + '/student/queryAllStudent.action', param).then(function (res) {
+                        console.log(res.data);
+                        app.result = res.data.result;
+                        console.log("-&#45;&#45;&#45;&#45;&#45;&#45;::" + app.result)
+                        app.pages = res.data.pages;
+                    }).then(function (error) {
+                    })
+                }
+            },
+            mounted: function () {
+                this.queryAllStudent();
+            }
+        });
+
+    });
+</script>-->
+
+</body>
+
+
+</html>

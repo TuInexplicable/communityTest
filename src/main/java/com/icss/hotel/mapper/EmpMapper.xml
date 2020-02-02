@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icss.hotel.dao.EmpMapper" >
+
+  <!--登录-->
+  <select id="logon" parameterType="java.lang.String" resultType="com.icss.hotel.domain.Emp">
+    SELECT * FROM tb_emp e WHERE e.account = #{account}
+  </select>
+  <!--查询所有员工-->
+  <select id="selectAllEmp" resultType="com.icss.hotel.domain.Emp">
+    SELECT * FROM tb_emp e WHERE e.roleid != 1
+  </select>
+  <!--添加员工-->
+  <insert id="addEmp" parameterType="com.icss.hotel.domain.Emp" >
+   INSERT INTO tb_emp(ename,gender,birth,account,phone,state,roleid)
+   VALUE(#{ename},#{gender},#{birth},#{account},#{phone},#{state},#{roleid})
+  </insert>
+  <!--查询员工信息-->
+  <select id="selectEmp" parameterType="java.lang.Integer" resultType="com.icss.hotel.domain.Emp">
+    SELECT * FROM tb_emp e WHERE e.empno = #{empno}
+  </select>
+  <!--修改信息-->
+  <update id="updateEmp">
+   UPDATE  tb_emp e SET e.ename=#{ename},e.birth=#{birth},e.account=#{account},e.phone=#{phone} WHERE e.empno = #{empno}
+  </update>
+  <!--修改密码-->
+  <update id="updatePassword">
+   UPDATE  tb_emp e SET e.password=#{password} WHERE e.empno = #{empno}
+  </update>
+</mapper>

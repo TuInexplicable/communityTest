@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icss.hotel.dao.TypeMapper" >
+
+<!--查询所有客房类型-->
+  <select id="queryAllType" resultType="com.icss.hotel.domain.Type">
+    select * from tb_type
+  </select>
+<!--增加客房类型-->
+  <insert id="addType" parameterType="com.icss.hotel.domain.Type">
+    INSERT INTO tb_type(tname,price) VALUES(#{tname},#{price})
+  </insert>
+
+  <!--查询客房类型-->
+  <select id="selectType" parameterType="java.lang.Integer" resultType="com.icss.hotel.domain.Type">
+    select * from tb_type t WHERE t.tno = #{tno}
+  </select>
+
+  <!--修改客房类型信息-->
+  <update id="updateType">
+   UPDATE  tb_type t SET t.tname=#{tname},t.price=#{price}  WHERE t.tno = #{tno}
+  </update>
+
+
+  <delete id="deleteType" parameterType="java.lang.Integer">
+    DELETE FROM tb_type WHERE tno = #{tno}
+  </delete>
+</mapper>
