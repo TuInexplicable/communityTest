@@ -63,8 +63,9 @@
             <div class="row">
                 <div class="col-md-offset-2">
                     <!--<input style="margin-left: -18px;margin-top: 10px" type="button" id="btnregister" class="btn btn-success btn-lg"value="用户注册" />-->
-                    <input style="margin-left: 200px;" type="button" id="btnuser" class="btn btn-success btn-lg"value="用户登录" />
-                    <!--<input style="margin-left: 5px;margin-top: 10px" type="button" id="btnadmin" class="btn btn-success btn-lg"value="管理登录" />-->
+                    <input style="margin-left: 30px;" type="button" id="btnuser" class="btn btn-success btn-lg"value="用户登录" />
+                    <span hidden id="aScope"></span>
+                    <input style="padding-left: 6px" type="button" class="btn btn-success btn-lg"value="Github 登录" id="gitLogin"/>
                 </div>
             </div>
         </div>
@@ -72,6 +73,12 @@
 </div>
 </body>
 <script type="text/javascript">
+
+    /*github 登陆*/
+    $("#gitLogin").on("click",function(){
+        $("#aScope").html("<a href='"+gitUrl+"'id='url'></a>");
+        $("#url")[0].click();
+    })
     $("#btnuser").on("click",function(){
     var loginAccount = $("#account").val();
     var password = $("#password").val();
