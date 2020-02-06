@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:52:04 GMT -->
 
@@ -188,8 +188,8 @@
                 <!-- user login dropdown start-->
                 <li class="dropdown text-center">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <img alt="" src="../img/avatar-2.jpg" class="img-circle profile-img thumb-sm">
-                        <span class="username" id="username"></span> <span class="caret"></span>
+                        <img title="默认" src="../img/bg_6.jpg" class="img-circle profile-img thumb-sm" id="userImg">
+                        用户：<span class="username" id="username"></span> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu pro-menu fadeInUp animated" tabindex="5003"
                         style="overflow: hidden; outline: none;">
@@ -273,6 +273,24 @@
                                                                                                                                                                                                                                                                                                                                                                                                    Counter Up
                                                                                                                                                                                                                                                                                                                                                                                                                   =============================================== */
     jQuery(document).ready(function ($) {
+        setTimeout(function () {
+            $.ajax({
+                type:"get",
+                url:baseUrl+"/getUser",
+                dataType:"json",
+                success:function(data){
+                    //msg:是LoginServlet返回的文本值，
+                    //sessionStorage 在重启浏览器，关闭页面或打开新页面时失效
+                    // sessionStorage.setItem("name",name);
+                    // sessionStorage.setItem("userId",msg.userId);
+
+                    $("#userImg").attr('src',data.gitUser.avatar_url);
+                    $("#userImg").attr("title","gitImage")
+                    $("#username").text(data.gitUser.id);
+
+                }
+            });
+        }, 500);
         if(localStorage.getItem("roleid")!=1){
             $("#baseManage").html("");
         }
@@ -281,12 +299,12 @@
             delay: 100,
             time: 1200
         });
-    });
+        });
     window.onload = function(){
         history.forward();
     }
     $("#outSystem").click(function () {
-       location.href = baseUrl;
+       location.href = baseUrl+"/login.html";
     })
     //右上角功能合并，jq转换成原生js调用点击事件，点击左侧功能条
     $("#changePersonMsg").click(function () {

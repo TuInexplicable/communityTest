@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
@@ -78,6 +78,15 @@
     $("#gitLogin").on("click",function(){
         $("#aScope").html("<a href='"+gitUrl+"'id='url'></a>");
         $("#url")[0].click();
+        localStorage.setItem("empno",11);
+        localStorage.setItem("roleid",-1)
+        /*setTimeout(function () {
+            location.href =baseUrl+"/page/index.html";
+        }, 1000)*/
+        // $.ajax({
+        //     type:"get",
+        //     url:baseUrl+"/getGitUser",
+        // });
     })
     $("#btnuser").on("click",function(){
     var loginAccount = $("#account").val();
